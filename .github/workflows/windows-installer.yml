@@ -1,0 +1,47 @@
+name: Build Windows Installer
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Publish AirTray (small EXE; framework-dependent)
+        shell: pwsh
+        run: |
+          dotnet restore AirTray.csproj -r win-x64
+          dotnet publish AirTray.csproj -c Release -r win-x64 --no-restore --self-contained false -p:PublishSingleFile=true -p:PublishReadyToRun=false -o publish
+      - name: Download official .NET 8 Windows Desktop runtime (offline installer)
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force runtime | Out-Null
+          $releases = Invoke-RestMethod 'https://dotnetcli.blob.core.windows.net/dotnet/release-metadata/8.0/releases.json'
+          $release = $releases.releases | Select-Object -First 1
+          $asset = $release.windowsdesktop.files | Where-Object { $_.rid -eq 'win-x64' -and $_.name -like '*.exe' } | Select-Object -First 1
+          if (-not $asset) { throw 'Windows Desktop Runtime x64 installer not found in official release manifest.' }
+          Invoke-WebRequest -Uri $asset.url -OutFile 'runtime/windowsdesktop-runtime-8-win-x64.exe'
+          $hash = (Get-FileHash 'runtime/windowsdesktop-runtime-8-win-x64.exe' -Algorithm SHA512).Hash.ToLowerInvariant()
+          if ($hash -ne $asset.hash.ToLowerInvariant()) { throw 'Runtime package SHA512 mismatch.' }
+      - name: Compile Inno Setup installer
+        shell: pwsh
+        run: |
+          $iscc = Join-Path ${env:ProgramFiles(x86)} 'Inno Setup 6\ISCC.exe'
+          if (-not (Test-Path $iscc)) { choco install innosetup --yes --no-progress }
+          if (-not (Test-Path $iscc)) { throw 'Inno Setup compiler missing.' }
+          & $iscc installer\AirTray.iss
+          if ($LASTEXITCODE -ne 0) { throw 'Inno Setup compilation failed.' }
+      - uses: actions/upload-artifact@v4
+        with:
+          name: AirTray-Windows-Installer
+          path: artifacts/*.exe
+          if-no-files-found: error
