@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/airtray-logo.svg" alt="AirTray" width="720">
+  <img src="docs/AirTrayEarbudsLogo.png" alt="AirTray" width="720">
 </p>
 
 # AirTray
