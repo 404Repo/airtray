@@ -1,0 +1,47 @@
+<svg width="960" height="260" viewBox="0 0 960 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="caseGrad" x1="40" y1="40" x2="220" y2="200" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#35C6FF"/>
+      <stop offset="1" stop-color="#0F56FF"/>
+    </linearGradient>
+    <linearGradient id="wordGrad" x1="280" y1="30" x2="860" y2="180" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1147E6"/>
+      <stop offset="1" stop-color="#20C9FF"/>
+    </linearGradient>
+    <linearGradient id="batteryGrad" x1="88" y1="118" x2="160" y2="118" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#74F27A"/>
+      <stop offset="1" stop-color="#1FE2D7"/>
+    </linearGradient>
+    <filter id="softGlow" x="0" y="0" width="300" height="260" filterUnits="userSpaceOnUse">
+      <feGaussianBlur stdDeviation="16" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <g filter="url(#softGlow)">
+    <rect x="40" y="80" rx="34" ry="34" width="180" height="150" fill="url(#caseGrad)"/>
+    <path d="M62 92C62 67.7 81.7 48 106 48H154C178.3 48 198 67.7 198 92V108H62V92Z" fill="#0C43C6"/>
+    <path d="M92 58C72 34 74 10 112 10C149 10 153 34 133 58" fill="#FFFFFF"/>
+    <path d="M128 58C108 34 110 10 148 10C185 10 189 34 169 58" fill="#FFFFFF"/>
+    <rect x="83" y="112" width="95" height="42" rx="12" stroke="#F6FAFF" stroke-width="8" fill="none"/>
+    <rect x="90" y="120" width="22" height="26" rx="5" fill="url(#batteryGrad)"/>
+    <rect x="117" y="120" width="22" height="26" rx="5" fill="url(#batteryGrad)"/>
+    <rect x="144" y="120" width="22" height="26" rx="5" fill="url(#batteryGrad)"/>
+    <rect x="178" y="124" width="8" height="18" rx="3" fill="#F6FAFF"/>
+    <path d="M82 188L99 171L116 188" stroke="#F6FAFF" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="140" cy="184" r="8" fill="#F6FAFF"/>
+    <circle cx="170" cy="184" r="8" fill="#F6FAFF"/>
+    <circle cx="200" cy="184" r="8" fill="#F6FAFF"/>
+  </g>
+
+  <g fill="url(#wordGrad)">
+    <path d="M310 196L376 44H430L495 196H442L429 163H375L362 196H310ZM388 123H416L402 82L388 123Z"/>
+    <path d="M510 74C510 59 521 48 537 48C553 48 564 59 564 74C564 88 553 99 537 99C521 99 510 88 510 74ZM512 111H562V196H512V111Z"/>
+    <path d="M585 111H634V124C645 114 659 107 676 107C713 107 739 135 739 173V196H690V176C690 159 681 149 665 149C649 149 634 159 634 180V196H585V111Z"/>
+    <path d="M765 111H735V74H785V111H832V148H785V196H736V148H705V111H736V104C736 68 758 44 795 44C810 44 824 46 836 50V90C829 87 821 85 813 85C798 85 785 92 785 108V111H765Z"/>
+    <path d="M837 153C837 103 874 107 907 107C949 107 960 129 960 164V196H913V184C903 194 891 199 875 199C847 199 826 184 826 161C826 136 850 125 883 125H911C908 113 899 109 886 109C869 109 854 115 842 123L837 153ZM911 155V149H895C878 149 870 154 870 163C870 171 877 176 889 176C903 176 911 168 911 155Z"/>
+  </g>
+</svg>
